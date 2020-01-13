@@ -19,8 +19,8 @@ export const resolvers = {
     books: (_, { input }, context, info) => {
       return books;
     },
-    book: (_, { id}) => {
-      return books.find(book => book.id === id)
+    book: (_, { id }) => {
+      return books.find(book => book.id === id);
     },
     authors: () => {
       return [
@@ -38,8 +38,6 @@ export const resolvers = {
   //   }
   // },
 
-
-  
   Mutation: {
     addAuthor: (_, { input: { name, twitter } }) => {
       return {
@@ -50,9 +48,9 @@ export const resolvers = {
     deleteBook: (_, { title }) => true,
     changeBookTitle: async (_, { input }) => {
       let { id, title } = input;
-      
+
       //simulate a big delay in processing
-     //await new Promise(resolve => setTimeout(resolve, 3000))
+      //await new Promise(resolve => setTimeout(resolve, 3000))
 
       let book = books.find(book => book.id === id);
 
@@ -63,13 +61,10 @@ export const resolvers = {
       //Return the new book title
       return {
         ...book,
-        title: title + ' test'
+        title: title
       };
     }
   },
-
-
-
 
   Subscription: {
     bookTitleChanged: {

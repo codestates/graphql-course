@@ -1,6 +1,5 @@
 # graphql-course
 
-
 ```
 cd api
 npm install
@@ -8,7 +7,7 @@ npm start
 ```
 
 ```
-cd web
+cd client
 npm install
 npm start
 ```
