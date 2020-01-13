@@ -1,15 +1,16 @@
-import pubsub from "./pubsub";
+import pubsub from './pubsub';
+import { withFilter } from 'apollo-server';
 
 const books = [
   {
     id: 1,
-    title: "Harry Potter and the Chamber of Secrets",
-    author: "J.K. Rowling"
+    title: 'Harry Potter and the Chamber of Secrets',
+    author: 'J.K. Rowling'
   },
   {
     id: 2,
-    title: "Jurassic Park",
-    author: "Michael Crichton"
+    title: 'Jurassic Park',
+    author: 'Michael Crichton'
   }
 ];
 
@@ -24,8 +25,8 @@ export const resolvers = {
     },
     authors: () => {
       return [
-        { name: "Todd", twitter: "toddmotto" },
-        { name: "React", twitter: "reactjs" }
+        { name: 'Todd', twitter: 'toddmotto' },
+        { name: 'React', twitter: 'reactjs' }
       ];
     }
   },
@@ -54,8 +55,12 @@ export const resolvers = {
 
       let book = books.find(book => book.id === id);
 
-      pubsub.publish("bookTitleChanged", {
+      pubsub.publish('bookTitleChanged', {
         bookTitleChanged: { ...book, title }
+      });
+
+      pubsub.publish('followAuthor', {
+        bookTitleChanged: { ...book }
       });
 
       //Return the new book title
@@ -68,7 +73,17 @@ export const resolvers = {
 
   Subscription: {
     bookTitleChanged: {
-      subscribe: () => pubsub.asyncIterator(["bookTitleChanged"])
+      subscribe: () => pubsub.asyncIterator(['bookTitleChanged'])
+    },
+    followAuthor: {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(['followAuthor']),
+        (payload, variables) => {
+          console.log('payload', payload, 'variables', variables);
+          return payload.bookTitleChanged.author === variables.authorName;
+        }
+      ),
+      resolve: payload => payload.bookTitleChanged
     }
   }
 };

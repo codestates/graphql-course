@@ -1,8 +1,9 @@
-import React from "react";
-import useBooksQuery from "./useBooksQuery";
-import useDeleteBookMutation from "./useDeleteBookMutation";
-import ChangeTitle from "./ChangeTitle";
-import useBookTitleChanged from "./useBookTitleChanged";
+import React from 'react';
+import useBooksQuery from './useBooksQuery';
+import useDeleteBookMutation from './useDeleteBookMutation';
+import ChangeTitle from './ChangeTitle';
+import FollowAuthor from './FollowAuthor';
+import useBookTitleChanged from './useBookTitleChanged';
 
 const Books = () => {
   useBookTitleChanged();
@@ -17,6 +18,7 @@ const Books = () => {
       <p>{book.author}</p>
       <button onClick={() => deleteBook(book.title)}>Delete Book</button>
       <ChangeTitle book={book} />
+      {/* <FollowAuthor author={book.author} /> */}
     </div>
   ));
 };

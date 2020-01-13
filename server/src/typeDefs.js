@@ -20,7 +20,6 @@ export const typeDefs = gql`
     author: String!
   }
 
-
   input ChangeBookInput {
     id: Int!
     title: String!
@@ -30,7 +29,6 @@ export const typeDefs = gql`
     """
     Get the latest books in our library collection in order by newest
     """
-
     books: [Book]
     """
     this is a book
@@ -38,7 +36,7 @@ export const typeDefs = gql`
     book(id: Int!): Book
     authors: [Author]
   }
-  
+
   type Mutation {
     changeBookTitle(input: ChangeBookInput!): Book
     addAuthor(input: AddAuthorInput!): Author
@@ -47,5 +45,6 @@ export const typeDefs = gql`
 
   type Subscription {
     bookTitleChanged: Book
+    followAuthor(authorName: String!): Book
   }
 `;
